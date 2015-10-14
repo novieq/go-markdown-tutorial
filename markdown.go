@@ -2,17 +2,22 @@ package main
 
 import (
     "net/http"
-
+    "os"
     "github.com/russross/blackfriday"
 )
 
 func main() {
+    //Heroku gives us a PORT environment variable and expects our web application to bind to it.
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "8080"
+    }
     http.HandleFunc("/markdown", GenerateMarkdown)
     //this is a catch all - so it is defined at the end
     http.Handle("/", http.FileServer(http.Dir("public")))
     /*The last bit of this program starts the server, we pass nil as our handler, which assumes that the HTTP requests
     will be handled by the net/http packages default http.ServeMux, which is configured using http.Handle and http.HandleFunc, respectively.*/
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":"+port, nil)
 }
 
 func GenerateMarkdown(rw http.ResponseWriter, r *http.Request) {
