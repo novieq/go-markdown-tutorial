@@ -36,9 +36,11 @@ func Test_GenerateMarkdown(t *testing.T) {
 	}
 	body, _ := json.Marshal(mcPostBody)*/
 
+	//The type of form is url.values. It stores data in key value pairs
 	form := url.Values{}
 	form.Add("body","This is a test")
 	req, err := http.NewRequest("POST", "www.example.com", strings.NewReader(form.Encode()))
+	//req.ParseForm(form)
 	req.PostForm = form
 	if err != nil {
 		t.Fatal(err)

@@ -25,6 +25,7 @@ func main() {
 func HelloWorld(res http.ResponseWriter, req *http.Request) {
     fmt.Fprint(res, "Hello World")
 }
+
 func GenerateMarkdown(rw http.ResponseWriter, r *http.Request) {
     markdown := blackfriday.MarkdownCommon([]byte(r.FormValue("body")))
     rw.Write(markdown)
